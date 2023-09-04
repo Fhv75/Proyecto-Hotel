@@ -35,7 +35,7 @@ export default function LoginForm() {
         localStorage.setItem('token', response.data.token)
         localStorage.setItem('userId', response.data.userId)
       } else {
-        console.error('Error en la autenticación:', response.data); // o responseData si usas fetch
+        console.error('Error en la autenticación:', response.data); 
       }
     } catch (error) {
       console.error('Error en la solicitud:', error);

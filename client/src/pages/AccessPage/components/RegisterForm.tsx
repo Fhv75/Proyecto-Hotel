@@ -31,14 +31,9 @@ export default function RegisterForm() {
   const navigate = useNavigate();
   const onSubmit = async (data: FormData) => {
     try {
-      const response = await axios.post("http://localhost:5000/cliente", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await axios.post("http://localhost:5000/cliente", data);
 
-      const responseData = await response.json();
+      const responseData = await response.data;
 
       if (response.status === 201) {
         localStorage.setItem("token", responseData.token);

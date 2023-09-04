@@ -3,9 +3,6 @@ import { UserRequest } from "../types"
 
 const jwt = require('jsonwebtoken')
 
-// Función que permite o bloquea al acceso a un recurso
-// dependiendo de si es que el usuario está autenticado o no
-
 function authenticate(req: UserRequest, res: Response, next: NextFunction) {
     const token = req.header('Authorization')
     if (token) {
@@ -17,6 +14,7 @@ function authenticate(req: UserRequest, res: Response, next: NextFunction) {
                     email: decodedToken.email,
                     rol: decodedToken.rol
                 }
+                res.locals.user = req.user
                 next()
             }
         })

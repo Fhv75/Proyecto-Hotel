@@ -1,3 +1,4 @@
+import  { useState } from "react";
 import {
   Box,
   Button,
@@ -7,26 +8,68 @@ import {
   Input,
   Select,
 } from "@chakra-ui/react";
-// Add property "expand" to searchbar
-export default function ExpandedSearchBar() {
+import { useNavigate } from "react-router-dom";
+
+export default function SearchBar() {
+    const [formData, setFormData] = useState({
+        checkIn: "",
+        checkOut: "",
+        tipo: "Individual",
+      });
+      const navigate = useNavigate();
+    
+      const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+          ...prevData,
+          [name]: value,
+        }));
+      };
+    
+      const handleSubmit = (e) => {
+        e.preventDefault();
+            const filteredData = Object.fromEntries(
+          Object.entries(formData).filter(([key, value]) => value && value.trim() !== "")
+        );
+    
+        const queryParams = new URLSearchParams(filteredData).toString();
+        navigate(`/search?${queryParams}`);
+    };
+
   return (
     <Box bg="white" rounded={14} py={10} px={24}>
-      <form>
+      <form onSubmit={handleSubmit}>
         <HStack gap={32}>
-          <FormControl>
+          <FormControl isRequired>
             <FormLabel fontWeight={"bold"}>Check In</FormLabel>
-            <Input placeholder="Fecha Check In" type="date" />
+            <Input
+              name="checkIn"
+              placeholder="Fecha Check In"
+              type="date"
+              value={formData.checkIn}
+              onChange={handleChange}
+            />
           </FormControl>
-          <FormControl>
+          <FormControl isRequired>
             <FormLabel fontWeight={"bold"}>Check Out</FormLabel>
-            <Input placeholder="Fecha Check Out" type="date" />
+            <Input
+              name="checkOut"
+              placeholder="Fecha Check Out"
+              type="date"
+              value={formData.checkOut}
+              onChange={handleChange}
+            />
           </FormControl>
           <FormControl>
             <FormLabel fontWeight={"bold"}>Tipo</FormLabel>
-            <Select>
-              <option>Hola</option>
-              <option>como</option>
-              <option>estas</option>
+            <Select
+              name="tipo"
+              value={formData.tipo}
+              onChange={handleChange}
+            >
+              <option value="Individual">Individual</option>
+              <option value="Doble">Doble</option>
+              <option value="Suite">Suite</option>
             </Select>
           </FormControl>
 
@@ -39,7 +82,6 @@ export default function ExpandedSearchBar() {
           >
             Buscar
           </Button>
-          {}
         </HStack>
       </form>
     </Box>

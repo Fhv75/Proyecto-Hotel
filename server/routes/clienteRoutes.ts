@@ -8,8 +8,7 @@ const clienteController = new ClienteController()
 
 router.post('/cliente', clienteController.createUser, clienteController.login)
 router.post('/cliente/login', clienteController.login)
-//router.get('/cliente', clienteController.getAllUsers)
-// router.get('/cliente/:id', clienteController.getUser)
+router.get('/cliente/:id/role', clienteController.getUserRole)
 router.put('/cliente/:id', authenticate ,clienteController.updateUser)
 router.delete('/cliente/:id', authenticate, verifyRole(['admin']), clienteController.deleteUser)
 

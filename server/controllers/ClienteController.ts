@@ -18,12 +18,12 @@ export default class UserController {
         this.login = this.login.bind(this)
         this.updateUser = this.updateUser.bind(this)
         this.deleteUser = this.deleteUser.bind(this)
+        this.getUserRole = this.getUserRole.bind(this)
     }
 
     async createUser(req: Request, res: Response) {
         try {
             const { email, nombre, pass, telefono } = req.body
-
             if (!email || !nombre || !pass || !telefono) {
                 return res.status(400).json({ message: 'Datos incompletos' })
             }
@@ -44,6 +44,22 @@ export default class UserController {
             res.status(201).json(user)
         } catch (error: any) {
             res.status(500).json({ message: 'Error al crear el usuario', error: error.message })
+        }
+    }
+
+    async getUserRole(req: UserRequest, res: Response) {
+        try {
+            const user = await this.db.cliente.findUnique({
+                where: {
+                    id: Number(req.params.id)
+                },
+                select: {
+                    rol: true
+                }
+            })
+            res.status(200).json(user)
+        } catch (error: any) {
+            res.status(500).json({ message: 'Error al obtener el rol del usuario', error: error.message })
         }
     }
 
