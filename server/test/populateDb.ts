@@ -16,6 +16,7 @@ async function main() {
           pass: faker.internet.password(),
           nombre: faker.person.firstName(),
           telefono: faker.phone.number(),
+          rol: "user"
         },
       });
     }
