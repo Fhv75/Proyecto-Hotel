@@ -22,7 +22,7 @@ type FormData = {
   pass: string;
 };
 
-export default function RegisterForm() {
+export default f<FormData>unction RegisterForm() {
   const {
     register,
     handleSubmit,

@@ -24,7 +24,7 @@ export default function LoginForm() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm();
   const navigate = useNavigate();
 
   const onSubmit = async (data: FormData) => {
@@ -35,7 +35,7 @@ export default function LoginForm() {
         localStorage.setItem('token', response.data.token)
         localStorage.setItem('userId', response.data.userId)
       } else {
-        console.error('Error en la autenticación:', response.data); 
+        console.error('Error en la autenticación:', response.data);
       }
     } catch (error) {
       console.error('Error en la solicitud:', error);
